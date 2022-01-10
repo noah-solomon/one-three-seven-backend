@@ -3,4 +3,4 @@ COPY requirements.txt /
 RUN pip3 install -r /requirements.txt
 COPY . /app
 WORKDIR /app
-ENTRYPOINT ["./gunicorn_starter.sh"]
+CMD gunicorn --chdir app app:app -w 2 --threads 2 -b 0.0.0.0:8000
