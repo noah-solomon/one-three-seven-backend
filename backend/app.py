@@ -9,7 +9,7 @@ app = Flask(__name__)
 db_name = "one-three-seven"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_ECHO"] = True
+app.config["SQLALCHEMY_ECHO"] = False
 
 ENV = os.environ.get("ENV", "prod")
 if ENV == 'dev':
