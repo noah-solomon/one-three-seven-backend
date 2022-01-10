@@ -7,18 +7,19 @@ from flask import request
 
 app = Flask(__name__)
 db_name = "one-three-seven"
-db_filepath = f"postgresql://postgres:@localhost/{db_name}"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 
-ENV = 'dev'
+ENV = os.environ.get("ENV", "prod")
 if ENV == 'dev':
     app.debug = True
+    db_filepath = f"postgresql://postgres:@localhost/{db_name}"
     app.config["SQLALCHEMY_DATABASE_URI"] = db_filepath
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = ''
+    db_filepath = os.environ.get("DATABASE_URL")
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_filepath
 
 
 db.init_app(app)
@@ -82,4 +83,4 @@ def delete_task(task_id):
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host='0.0.0.0', port=port)
