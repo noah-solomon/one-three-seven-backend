@@ -49,6 +49,12 @@ def before_request():
             return failure_response("Invalid JSON")
 
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
 # -- TASK ROUTES ---------------------------------------------------
 @app.route("/")
 def hello_world():
