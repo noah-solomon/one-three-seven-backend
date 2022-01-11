@@ -3,4 +3,6 @@ COPY requirements.txt /
 RUN pip3 install -r /requirements.txt
 COPY . /app
 WORKDIR /app
-CMD gunicorn app:app -w 2 --threads 2
+RUN flask db migrate
+RUN flask db upgrade
+CMD gunicorn app:app
