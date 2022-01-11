@@ -42,10 +42,11 @@ def failure_response(message, code=404):
 
 @app.before_request
 def before_request():
-    try:
-        json.loads(request.data)
-    except json.JSONDecodeError:
-        return failure_response("Invalid JSON")
+    if request.method == 'POST':
+        try:
+            json.loads(request.data)
+        except json.JSONDecodeError:
+            return failure_response("Invalid JSON")
 
 
 # -- TASK ROUTES ---------------------------------------------------
