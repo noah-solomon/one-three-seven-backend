@@ -5,3 +5,4 @@ COPY . /app
 WORKDIR /app
 RUN flask db migrate
 RUN flask db upgrade
+CMD gunicorn app:app
